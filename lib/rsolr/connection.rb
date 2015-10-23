@@ -34,7 +34,8 @@ class RSolr::Connection
         proxy_user, proxy_pass = proxy.userinfo.split(/:/) if proxy.userinfo
         Net::HTTP.Proxy(proxy.host, proxy.port, proxy_user, proxy_pass).new uri.host, uri.port
       else
-        Net::HTTP.new uri.host, uri.port
+        # Net::HTTP.new uri.host, uri.port
+        Net::HTTP.newobj(uri.host, uri.port)
       end
       http.use_ssl = uri.port == 443 || uri.instance_of?(URI::HTTPS)
       http.read_timeout = read_timeout if read_timeout
